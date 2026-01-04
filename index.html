@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo dos Recursos Minerais - Geografia</title>
+    <meta name="description" content="Jogo educacional interativo sobre recursos minerais para estudantes de Geografia">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Particle Background -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="screen active">
+            <div class="welcome-content">
+                <div class="logo-container">
+                    <div class="mineral-icon">💎</div>
+                </div>
+                <h1 class="main-title">Recursos Minerais</h1>
+                <p class="subtitle">Aprende e Desafia-te!</p>
+
+                <div class="game-modes">
+                    <div class="mode-card" data-mode="classification">
+                        <div class="mode-icon">🎯</div>
+                        <h3>Modo Classificação</h3>
+                        <p>Arrasta os minerais para a categoria correta</p>
+                        <div class="difficulty-badge">médio</div>
+                    </div>
+
+                    <div class="mode-card" data-mode="quiz">
+                        <div class="mode-icon">🧠</div>
+                        <h3>Modo Quiz</h3>
+                        <p>Responde às perguntas sobre recursos minerais</p>
+                        <div class="difficulty-badge">fácil</div>
+                    </div>
+
+                    <div class="mode-card" data-mode="speed">
+                        <div class="mode-icon">⚡</div>
+                        <h3>Modo Relâmpago</h3>
+                        <p>Classifica o máximo de minerais em 60 segundos</p>
+                        <div class="difficulty-badge hard">difícil</div>
+                    </div>
+                </div>
+
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-score">0</div>
+                        <div class="stat-label">Pontuação Total</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="games-played">0</div>
+                        <div class="stat-label">Jogos Completos</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Classification Game Screen -->
+        <div id="classification-screen" class="screen">
+            <div class="game-header">
+                <button class="btn-back" id="back-classification">← Voltar</button>
+                <div class="score-display">
+                    <span class="score-label">Pontuação:</span>
+                    <span class="score-value" id="classification-score">0</span>
+                </div>
+            </div>
+
+            <div class="game-content">
+                <h2 class="game-title">Classifica os Minerais</h2>
+                <p class="game-instruction">Arrasta cada mineral para a categoria correta</p>
+
+                <div class="mineral-to-classify" id="current-mineral">
+                    <div class="mineral-card draggable">
+                        <div class="mineral-name"></div>
+                        <button class="hint-btn" id="hint-btn" title="Ver Dica">
+                            <span class="hint-icon">💡</span>
+                            <span class="hint-text">Dica</span>
+                        </button>
+                        <div class="hint-display" id="hint-display"></div>
+                    </div>
+                </div>
+
+                <div class="categories-grid">
+                    <div class="category-zone" data-category="metalicos">
+                        <div class="category-header">
+                            <div class="category-icon">⚙️</div>
+                            <h3>Metálicos</h3>
+                        </div>
+                        <p class="category-desc">Apresentam substâncias metálicas</p>
+                        <div class="drop-zone"></div>
+                    </div>
+
+                    <div class="category-zone" data-category="energeticos">
+                        <div class="category-header">
+                            <div class="category-icon">⚡</div>
+                            <h3>Energéticos</h3>
+                        </div>
+                        <p class="category-desc">Usados como fonte de energia</p>
+                        <div class="drop-zone"></div>
+                    </div>
+
+                    <div class="category-zone" data-category="industriais">
+                        <div class="category-header">
+                            <div class="category-icon">🏭</div>
+                            <h3>Rochas Industriais</h3>
+                        </div>
+                        <p class="category-desc">Indústria e construção civil</p>
+                        <div class="drop-zone"></div>
+                    </div>
+
+                    <div class="category-zone" data-category="ornamentais">
+                        <div class="category-header">
+                            <div class="category-icon">🎨</div>
+                            <h3>Rochas Ornamentais</h3>
+                        </div>
+                        <p class="category-desc">Ornamentação e decoração</p>
+                        <div class="drop-zone"></div>
+                    </div>
+
+                    <div class="category-zone" data-category="nao_metalicos">
+                        <div class="category-header">
+                            <div class="category-icon">💎</div>
+                            <h3>Não Metálicos</h3>
+                        </div>
+                        <p class="category-desc">Outros minerais não metálicos</p>
+                        <div class="drop-zone"></div>
+                    </div>
+                </div>
+
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="classification-progress"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span id="current-question">0</span> / <span id="total-questions">20</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Game Screen -->
+        <div id="quiz-screen" class="screen">
+            <div class="game-header">
+                <button class="btn-back" id="back-quiz">← Voltar</button>
+                <div class="score-display">
+                    <span class="score-label">Pontuação:</span>
+                    <span class="score-value" id="quiz-score">0</span>
+                </div>
+            </div>
+
+            <div class="game-content">
+                <h2 class="game-title">Quiz de Recursos Minerais</h2>
+
+                <div class="quiz-card">
+                    <div class="question-number">Pergunta <span id="quiz-current">1</span> de <span
+                            id="quiz-total">15</span></div>
+                    <h3 class="quiz-question" id="quiz-question"></h3>
+
+                    <div class="quiz-options" id="quiz-options">
+                        <!-- Options will be inserted here -->
+                    </div>
+                </div>
+
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="quiz-progress"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Speed Game Screen -->
+        <div id="speed-screen" class="screen">
+            <div class="game-header">
+                <button class="btn-back" id="back-speed">← Voltar</button>
+                <div class="timer-display" id="timer">
+                    <span class="timer-icon">⏱️</span>
+                    <span class="timer-value">60</span>s
+                </div>
+                <div class="score-display">
+                    <span class="score-label">Pontos:</span>
+                    <span class="score-value" id="speed-score">0</span>
+                </div>
+            </div>
+
+            <div class="game-content speed-mode">
+                <h2 class="game-title">Modo Relâmpago</h2>
+                <p class="game-instruction">Classifica o máximo de minerais possível!</p>
+
+                <div class="speed-mineral" id="speed-current-mineral">
+                    <div class="mineral-name-big"></div>
+                </div>
+
+                <div class="speed-buttons" id="speed-buttons">
+                    <button class="speed-btn" data-category="metalicos">
+                        <span class="btn-icon">⚙️</span>
+                        <span class="btn-text">Metálicos</span>
+                    </button>
+                    <button class="speed-btn" data-category="energeticos">
+                        <span class="btn-icon">⚡</span>
+                        <span class="btn-text">Energéticos</span>
+                    </button>
+                    <button class="speed-btn" data-category="industriais">
+                        <span class="btn-icon">🏭</span>
+                        <span class="btn-text">R. Industriais</span>
+                    </button>
+                    <button class="speed-btn" data-category="ornamentais">
+                        <span class="btn-icon">🎨</span>
+                        <span class="btn-text">R. Ornamentais</span>
+                    </button>
+                    <button class="speed-btn" data-category="nao_metalicos">
+                        <span class="btn-icon">💎</span>
+                        <span class="btn-text">N. Metálicos</span>
+                    </button>
+                </div>
+
+                <div class="combo-display" id="combo-display">
+                    <span class="combo-text">Combo: </span>
+                    <span class="combo-value">0</span>
+                    <span class="combo-multiplier">×1</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="screen">
+            <div class="results-content">
+                <div class="results-icon" id="results-icon">🏆</div>
+                <h2 class="results-title" id="results-title">Parabéns!</h2>
+                <div class="final-score" id="final-score">0</div>
+                <p class="results-message" id="results-message"></p>
+
+                <div class="results-stats">
+                    <div class="result-stat">
+                        <div class="result-label">Corretas</div>
+                        <div class="result-value" id="correct-answers">0</div>
+                    </div>
+                    <div class="result-stat">
+                        <div class="result-label">Incorretas</div>
+                        <div class="result-value" id="wrong-answers">0</div>
+                    </div>
+                    <div class="result-stat">
+                        <div class="result-label">Precisão</div>
+                        <div class="result-value" id="accuracy">0%</div>
+                    </div>
+                </div>
+
+                <div class="results-buttons">
+                    <button class="btn-primary" id="play-again">Jogar Novamente</button>
+                    <button class="btn-secondary" id="back-home">Menu Principal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feedback Popup -->
+    <div class="feedback-popup" id="feedback-popup">
+        <div class="feedback-content">
+            <div class="feedback-icon"></div>
+            <div class="feedback-text"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
