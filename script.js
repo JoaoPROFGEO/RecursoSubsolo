@@ -1,3 +1,16 @@
+const codigoCorreto = "GEO2026";
+let codigoInserido = prompt("Introduz o código da turma para aceder ao jogo:");
+
+// 1. Verifica se o utilizador clicou em cancelar (null)
+// 2. Ou se o código transformado em maiúsculas é diferente do correto
+if (codigoInserido === null || codigoInserido.toUpperCase() !== codigoCorreto) {
+  alert("Código incorreto ou ação cancelada. Fala com o professor.");
+  document.body.innerHTML = "<h1>Acesso Negado</h1><p>Recarrega a página para tentar novamente.</p>";
+} else {
+  // O código está correto, o jogo pode iniciar
+  console.log("Acesso permitido!");
+}
+
 // ==================== DATA ====================
 const mineralsData = {
     metalicos: [
@@ -681,3 +694,4 @@ function createParticles() {
         particlesContainer.appendChild(particle);
     }
 }
+
